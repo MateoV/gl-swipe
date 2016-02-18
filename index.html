@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8' />
+    <title></title>
+    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.14.1/mapbox-gl.js'></script>
+    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.14.1/mapbox-gl.css' rel='stylesheet' />
+    <style>
+        body { margin:0; padding:0; }
+        #map { position:absolute; top:0; bottom:0; width:100%; }
+    </style>
+</head>
+<body>
+
+<script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-compare/v0.0.1/mapbox-gl-compare.js'></script>
+<link rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-compare/v0.0.1/mapbox-gl-compare.css' type='text/css' />
+<style>
+body {
+    overflow: hidden;
+}
+
+body * {
+   -webkit-touch-callout: none;
+     -webkit-user-select: none;
+        -moz-user-select: none;
+         -ms-user-select: none;
+             user-select: none;
+}
+
+.map {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+}
+</style>
+
+<div id='before' class='map'></div>
+<div id='after' class='map'></div>
+
+<script>
+// make the url passable
+function getQueryVariable(variable) {
+  var query = window.location.search.substring(1);
+  var vars = query.split("&");
+  for (var i=0;i<vars.length;i++) {
+    var pair = vars[i].split("=");
+    if(pair[0] == variable){return pair[1];}
+  }
+  return(false);
+}
+var style1 = getQueryVariable('style2');
+var style2 = getQueryVariable('style1');
+
+// hash treatment
+if(!hash) {
+  var hashZoom=1.37;
+  var hashLat=8.9;
+  var hashLng=16.0;
+} else {
+  var hash = window.location.hash;
+  var hashValues = hash.split("/");
+  var hashZoom = hashValues[0].split("#");
+  var hashZoom = hashZoom[1];
+  var hashLng = hashValues[2];
+  var hashLat = hashValues[1];
+}
+
+mapboxgl.accessToken = 'pk.eyJ1IjoibWF0dCIsImEiOiJTUHZkajU0In0.oB-OGTMFtpkga8vC48HjIg';
+
+var before = new mapboxgl.Map({
+    container: 'before',
+    style: 'mapbox://styles/matt/' + style1,
+    center: [hashLng, hashLat],
+    zoom: hashZoom,
+    hash: true,
+});
+
+var after = new mapboxgl.Map({
+    container: 'after',
+    style: 'mapbox://styles/matt' + style2,
+    center: [hashLng, hashLat],
+    zoom: hashZoom,
+    hash: true,
+});
+
+new mapboxgl.Compare(before, after);
+</script>
+
+</body>
+</html>
