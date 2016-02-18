@@ -50,8 +50,8 @@ function getQueryVariable(variable) {
   }
   return(false);
 }
-var style1 = getQueryVariable('style2');
-var style2 = getQueryVariable('style1');
+var style1 = getQueryVariable('style1');
+var style2 = getQueryVariable('style2');
 
 // hash treatment
 if(!hash) {
@@ -79,7 +79,7 @@ var before = new mapboxgl.Map({
 
 var after = new mapboxgl.Map({
     container: 'after',
-    style: 'mapbox://styles/matt' + style2,
+    style: 'mapbox://styles/matt/' + style2,
     center: [hashLng, hashLat],
     zoom: hashZoom,
     hash: true,
